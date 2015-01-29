@@ -1,0 +1,30 @@
+{
+	"name": "istt/yii2-shop-module",
+	"description": "A module for Yii2",
+	"keywords": ["istt", "ndtrung", "yii", "shop"],
+	"type": "yii2-extension",
+	"license": "MIT",
+	"authors": [
+		{
+			"name": "Nguyen Dinh Trung",
+			"email": "ndtrung@istt.com.vn",
+			"homepage": "http://istt.com.vn"
+		}
+	],
+	"require": {
+		"yiisoft/yii2": "*",
+		"kartik-v/yii2-widgets": "*",
+		"yiisoft/yii2-mongodb": "*",
+		"omnilight/yii2-shopping-cart": "*",
+    	"creocoder/yii2-nested-sets": "*",
+		"behat/transliterator": "*"
+	},
+	"autoload": {
+		"psr-4": {
+			"istt\\shop\\": ""
+		}
+	},
+	"extra": {
+        "bootstrap": "istt\\shop\\Bootstrap"
+    }
+}
