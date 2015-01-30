@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+use istt\shop\models\Product;
 
 /* @var $this yii\web\View */
 /* @var $model vendor\istt\shop\models\Product */
@@ -30,6 +31,8 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
         ]) ?>
     </p>
+
+    <?= Html::img("@web/" . Product::REPOSITORY. $model->image, ['class' => 'thumbnail', 'alt' => $model->image]); ?>
 
     <?= DetailView::widget([
         'model' => $model,

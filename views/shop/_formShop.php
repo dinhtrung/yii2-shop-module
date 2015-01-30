@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use kartik\widgets\ActiveForm;
+use kartik\widgets\FileInput;
 
 /* @var $this yii\web\View */
 /* @var $model vendor\istt\shop\models\Shop */
@@ -10,9 +11,15 @@ use kartik\widgets\ActiveForm;
 
 <div class="shop-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin([ 'options'=>['enctype'=>'multipart/form-data']]); ?>
 
     <?= $form->field($model, 'name')->textInput(['maxlength' => 40]) ?>
+
+    <?= $form->field($model, 'title')->textInput(['maxlength' => 40]) ?>
+
+    <?= $form->field($model, 'imageFile')->widget(FileInput::className(),[
+    		'options' => ['multiple' => true],
+    ]);?>
 
     <?= $form->field($model, 'description')->textarea(['rows' => 6]) ?>
 

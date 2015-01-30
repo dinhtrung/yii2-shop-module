@@ -8,6 +8,7 @@ use istt\shop\models\CategorySearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\UploadedFile;
 
 /**
  * CategoryController implements the CRUD actions for Category model.
@@ -62,6 +63,17 @@ class CategoryController extends Controller
 		$model = new Category ();
 		$res = false;
 		if ($model->load ( Yii::$app->request->post () ) && $model->validate ()) {
+			/** Handle uploaded file **/
+			$image = UploadedFile::getInstance($model, 'imageFile');
+			if (($image instanceof UploadedFile)){
+				$suffix = '';
+				while (!file_exists($filePath = Yii::getAlias("@webroot/" .Category::REPOSITORY . ($fileName = $image->baseName . $suffix . $image->extension)))){
+					$suffix += 1;
+					$image->saveAs($filePath);
+				}
+				$model->image = $fileName;
+			}
+			/** Handle tree relation **/
 			$parent = Category::findOne ( $model->parent );
 			if ($parent) {
 				$model->appendTo ( $parent );
@@ -88,6 +100,17 @@ class CategoryController extends Controller
 		$oldParent = $model->parent;
 		$res = false;
 		if ($model->load ( Yii::$app->request->post () )) {
+			/** Handle uploaded file **/
+			$image = UploadedFile::getInstance($model, 'imageFile');
+			if (($image instanceof UploadedFile)){
+				$suffix = '';
+				while (!file_exists($filePath = Yii::getAlias("@webroot/" .Category::REPOSITORY . ($fileName = $image->baseName . $suffix . $image->extension)))){
+					$suffix += 1;
+					$image->saveAs($filePath);
+				}
+				$model->image = $fileName;
+			}
+			/** Handle relation **/
 			if (($model->parent == 0 ) && (!$model->isRoot())){
 				$res = $model->makeRoot();
 			} else{

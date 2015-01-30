@@ -46,7 +46,7 @@ class Product extends \yii\db\ActiveRecord implements CartPositionInterface
      * @inheritdoc
      */
     public $imageFile;
-    const REPOSITORY="@web/uploads/products/images";
+    const REPOSITORY="uploads/products/images";
     public function rules()
     {
         return [

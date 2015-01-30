@@ -8,9 +8,12 @@ use Yii;
  * This is the model class for table "{{%shop}}".
  *
  * @property string $name
+ * @property string $title
  * @property string $description
- * @property string $tags
- * @property integer $owner_id
+ * @property string $image					Image File
+ * @property string $tags					Meta keywords for this shop
+ * @property integer $owner_id			The user id assigned to this shop
+ * @property integer $category_id		The root category assigned to this shop
  * @property integer $created_at
  * @property integer $updated_at
  * @property integer $created_by
@@ -39,6 +42,8 @@ class Shop extends \yii\db\ActiveRecord
     /**
      * @inheritdoc
      */
+    public $imageFile;
+    const REPOSITORY="uploads/shop";
     public function rules()
     {
         return [
@@ -46,6 +51,10 @@ class Shop extends \yii\db\ActiveRecord
             [['description'], 'string'],
             [['owner_id'], 'integer'],
             [['name'], 'string', 'max' => 40],
+        		// Extra attributes
+        		[['imageFile'], 'file', 'mimeTypes' => 'image/png image/jpeg image/gif'],
+        		[['name'], 'unique'],
+        		[['title'], 'string', 'max' => 255],
         ];
     }
 

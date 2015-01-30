@@ -8,6 +8,7 @@ use istt\shop\models\ShopSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\UploadedFile;
 
 /**
  * ShopController implements the CRUD actions for Shop model.
@@ -62,12 +63,25 @@ class ShopController extends Controller
     {
         $model = new Shop();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->name]);
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+        	/** Handle uploaded file **/
+        	$image = UploadedFile::getInstance($model, 'imageFile');
+        	if (($image instanceof UploadedFile)){
+        		$suffix = '';
+        		while (!file_exists($filePath = Yii::getAlias("@webroot/" .Shop::REPOSITORY . ($fileName = $image->baseName . $suffix . $image->extension)))){
+        			$suffix += 1;
+        			$image->saveAs($filePath);
+        		}
+        		$model->image = $fileName;
+        	}
+        	/** Save the model **/
+        	if ($model->save()){
+            	return $this->redirect(['view', 'id' => $model->name]);
+        	} else {
+        		return $this->render('createShop', [ 'model' => $model, ]);
+        	}
         } else {
-            return $this->render('createShop', [
-                'model' => $model,
-            ]);
+            return $this->render('createShop', [ 'model' => $model, ]);
         }
     }
 
@@ -81,12 +95,25 @@ class ShopController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->name]);
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+        	/** Handle uploaded file **/
+        	$image = UploadedFile::getInstance($model, 'imageFile');
+        	if (($image instanceof UploadedFile)){
+        		$suffix = '';
+        		while (!file_exists($filePath = Yii::getAlias("@webroot/" . Shop::REPOSITORY . ($fileName = $image->baseName . $suffix . $image->extension)))){
+        			$suffix += 1;
+        			$image->saveAs($filePath);
+        		}
+        		$model->image = $fileName;
+        	}
+        	/** Save the model **/
+        	if ($model->save()){
+            	return $this->redirect(['view', 'id' => $model->name]);
+        	} else {
+	            return $this->render('updateShop', [ 'model' => $model, ]);
+        	}
         } else {
-            return $this->render('updateShop', [
-                'model' => $model,
-            ]);
+            return $this->render('updateShop', [ 'model' => $model, ]);
         }
     }
 

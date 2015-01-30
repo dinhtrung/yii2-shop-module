@@ -44,7 +44,7 @@ class Category extends \yii\db\ActiveRecord
      * @inheritdoc
      */
     public $imageFile;
-    const REPOSITORY="@webapp/uploads/category";
+    const REPOSITORY="uploads/category/";
     public $parent;
     public function rules()
     {
@@ -149,6 +149,11 @@ class Category extends \yii\db\ActiveRecord
 	public static function find()
 	{
 		return new CategoryQuery(get_called_class());
+	}
+
+	public function afterFind(){
+		$this->imageFile = Yii::getAlias("@webroot/" . self::REPOSITORY . $this->image);
+		parent::afterFind();
 	}
 
 }

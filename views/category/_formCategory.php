@@ -38,7 +38,7 @@ use istt\shop\models\Category;
 
 <div class="row">
 	<div class="col-sm-6">
-	    <?= $form->field($model, 'image')->widget(FileInput::className()) ?>
+	    <?= $form->field($model, 'imageFile')->widget(FileInput::className()) ?>
 
 	    <?= $form->field($model, 'parent', ['addon' => ['prepend' => ['content' => '<i class="glyphicon glyphicon-heart"></i>']]])->widget(Select2::className(), [
 	    		'data' => [null => Yii::t('shop', '-- Select parent Category --')] + Category::CategoryOptions()
