@@ -14,12 +14,4 @@ class ShopModule extends BaseModule
 	/** @var array The rules to be used in URL management. */
 	public $urlRules = [
 	];
-//     public function init()
-//     {
-//         parent::init();
-
-//         if (\Yii::$app instanceof Application){
-//         	$this->controllerNamespace = 'istt\shop\commands';
-//         }
-//     }
 }

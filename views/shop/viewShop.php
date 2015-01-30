@@ -1,0 +1,42 @@
+<?php
+
+use yii\helpers\Html;
+use yii\widgets\DetailView;
+
+/* @var $this yii\web\View */
+/* @var $model vendor\istt\shop\models\Shop */
+
+$this->title = $model->name;
+$this->params['breadcrumbs'][] = ['label' => Yii::t('shop', 'Shops'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = $this->title;
+?>
+<div class="shop-view">
+
+    <h1><?= Html::encode($this->title) ?></h1>
+
+    <p>
+        <?= Html::a(Yii::t('shop', 'Update'), ['update', 'id' => $model->name], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a(Yii::t('shop', 'Delete'), ['delete', 'id' => $model->name], [
+            'class' => 'btn btn-danger',
+            'data' => [
+                'confirm' => Yii::t('shop', 'Are you sure you want to delete this item?'),
+                'method' => 'post',
+            ],
+        ]) ?>
+    </p>
+
+    <?= DetailView::widget([
+        'model' => $model,
+        'attributes' => [
+            'name',
+            'description:ntext',
+            'tags',
+            'owner_id',
+            'created_at:datetime',
+            'updated_at:datetime',
+            'created_by',
+            'updated_by',
+        ],
+    ]) ?>
+
+</div>
