@@ -3,6 +3,8 @@
 namespace istt\shop\models;
 
 use Yii;
+use yz\shoppingcart\CartPositionInterface;
+use yz\shoppingcart\CartPositionTrait;
 
 /**
  * This is the model class for table "{{%product}}".
@@ -22,7 +24,7 @@ use Yii;
  * @property Category $category
  * @property Shop $shopName
  */
-class Product extends \yii\db\ActiveRecord
+class Product extends \yii\db\ActiveRecord implements CartPositionInterface
 {
     /**
      * @inheritdoc
@@ -94,4 +96,32 @@ class Product extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Shop::className(), ['name' => 'shop_name']);
     }
+
+
+    /* END OF GII GENERATED CODE */
+    /* END OF GII GENERATED CODE */
+    /* END OF GII GENERATED CODE */
+
+    use CartPositionTrait;
+
+    public function getPrice()
+    {
+    	return $this->price;
+    }
+
+    public function getId()
+    {
+    	return $this->id;
+    }
+    /**
+         * Automatically insert created_at, created_by, updated_at, updated_by
+         * @see \yii\base\Component::behaviors()
+         */
+        public function behaviors(){
+        	return [
+        			'blameable' => \yii\behaviors\BlameableBehavior::className(),
+        			'timestamp' => \yii\behaviors\TimestampBehavior::className(),
+        	];
+        }
+
 }

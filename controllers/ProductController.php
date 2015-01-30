@@ -8,6 +8,7 @@ use istt\shop\models\ProductSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\helpers\VarDumper;
 
 /**
  * ProductController implements the CRUD actions for Product model.
@@ -48,8 +49,10 @@ class ProductController extends Controller
      */
     public function actionView($id)
     {
+    	$model = $this->findModel($id);
+    	Yii::$app->getUser()->setReturnUrl(Yii::$app->request->url);
         return $this->render('viewProduct', [
-            'model' => $this->findModel($id),
+            'model' => $model,
         ]);
     }
 
@@ -117,5 +120,25 @@ class ProductController extends Controller
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
+    }
+
+    /* END OF GII GENERATION CODE */
+    /* END OF GII GENERATION CODE */
+    /* END OF GII GENERATION CODE */
+
+    /**
+     * Lists all Product models on a grid view.
+     * Shop administration tool
+     * @return mixed
+     */
+    public function actionAdmin()
+    {
+    	$searchModel = new ProductSearch();
+    	$dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+    	return $this->render('adminProduct', [
+    			'searchModel' => $searchModel,
+    			'dataProvider' => $dataProvider,
+    	]);
     }
 }

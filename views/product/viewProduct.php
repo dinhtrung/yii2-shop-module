@@ -23,21 +23,27 @@ $this->params['breadcrumbs'][] = $this->title;
                 'method' => 'post',
             ],
         ]) ?>
+        <?= Html::a(Yii::t('shop', 'Add To Cart'), ['cart/add', 'id' => $model->id], [
+            'class' => 'btn btn-warning',
+            'data' => [
+                'method' => 'post',
+            ],
+        ]) ?>
     </p>
 
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'id',
+//             'id',
             'title',
             'description:ntext',
             'price',
             'image',
             'category_id',
             'shop_name',
-            'created_at',
+            'created_at:datetime',
             'created_by',
-            'updated_at',
+            'updated_at:datetime',
             'updated_by',
         ],
     ]) ?>
